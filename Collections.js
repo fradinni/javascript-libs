@@ -29,6 +29,10 @@ Collection.prototype.length = function() {
 	return this.size;
 }
 
+Collection.prototype.empty = function() {
+	return (this.size <= 0);
+}
+
 
 
 
@@ -568,13 +572,6 @@ Stack.prototype.pop = function(element) {
 	}
 }
 
-
-// 
-// Return true if Stack is empty
-//
-Stack.prototype.empty = function() {
-	return (this.size <= 0);
-}
 
 // @Override of Collection _calculateCollectionSize() method
 Stack.prototype._calculateCollectionSize = function() {
