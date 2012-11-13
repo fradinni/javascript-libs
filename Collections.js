@@ -499,3 +499,97 @@ Map.prototype.findAll = function(callback) {
 	}
 	return matches;
 };
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// Stack implementation.
+// 
+// Author: Nicolas FRADIN
+// Date : 2012-11-13
+//
+
+
+//
+// Create new Stack
+//
+var Stack = function(args) {
+	Collection.apply(this, args);
+	this.elements = new List();
+}
+
+
+// Extend Stack from Collection
+Stack.prototype = new Collection();
+
+
+//
+// Push an element in stack in first position
+//
+Stack.prototype.push = function(element) {
+	if(this.size > 0) {
+		this.elements.addAt(0, element);
+	} else {
+		this.elements.add(element);
+	}
+	this._calculateCollectionSize();
+}
+
+
+//
+// Get an element from stack without removing it
+//
+Stack.prototype.peek = function(element) {
+	if(!this.empty()) {
+		return this.elements.get(0);
+	} else {
+		return undefined;
+	}
+	
+}
+
+
+//
+// Pop an element from stack
+//
+Stack.prototype.pop = function(element) {
+	if(!this.empty()) {
+		var res = this.elements.get(0);
+		this.elements.removeAt(0);
+		this._calculateCollectionSize();
+		return res;
+	} else {
+		return undefined;
+	}
+}
+
+
+// 
+// Return true if Stack is empty
+//
+Stack.prototype.empty = function() {
+	return (this.size <= 0);
+}
+
+// @Override of Collection _calculateCollectionSize() method
+Stack.prototype._calculateCollectionSize = function() {
+	this.size = this.elements.length();
+}
+
+// @Override of Collection clear() method
+Stack.prototype.clear = function() {
+	this.elements = new List();
+	this.size = 0;
+
+	return this;
+}
+
+// @Override of Collection length() method
+Stack.prototype.length = function() {
+	return this.elements.length();
+}
