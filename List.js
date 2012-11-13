@@ -209,6 +209,7 @@ List.prototype = {
 
 	//
 	// Return a String representation of List
+	// [element1, element2, element3, ...]
 	//
 	toString: function() {
 		var str = "[";
@@ -226,7 +227,11 @@ List.prototype = {
 
 
 	//
-	// Iterate on each element of List
+	// Iterate on each element of List passing current element to callback method
+	//
+	// @param callback 	Callback method containing code to execute for each element.
+	// 					If callback method returns a value, this value will replace
+	//					current element;
 	//
 	each: function(callback) {
 		for(elementPos in this.elements) {
@@ -237,6 +242,15 @@ List.prototype = {
 		}
 	},
 
+
+	//
+	// Iterate on each element of List passing current element and current index
+	// to callback method
+	//
+	// @param callback 	Callback method containing code to execute for each element.
+	// 					If callback method returns a value, this value will replace
+	//					current element;
+	//
 	eachWithIndex: function(callback) {
 		for(elementPos in this.elements) {
 			var ret = callback(this.elements[elementPos], elementPos);
@@ -246,20 +260,43 @@ List.prototype = {
 		}
 	},
 
+
+	//
+	// Return the first matching element in List passing current element to callback method
+	//
+	// @param callback 	Callback method returning the result of
+	// 					matching test for current element.
+	// @return element  First matching element else returns undefined
+	//
+	// Example:
+	//
+	//		// Find first element containing String "str"
+	//		var matchingElement = myList.find(function(it) {
+	//			return it.indexOf("str") > -1; // Test if element contains "str"
+	//		})
+	//
 	find: function(callback) {
 		for(elementPos in this.elements) {
-			if(callback(this.elements[elementPos]) == true) {
+			if(callback(this.elements[elementPos])) {
 				return this.elements[elementPos];
 			}
 		}
 		return undefined;
 	},
 
+
+	//
+	// Return matching elements in List passing current element to callback method
+	//
+	// @param callback 	Callback method returning the result of
+	// 					matching test for current element.
+	// @return elements Array of matching elements
+	//
 	findAll: function(callback) {
 		var matches = [];
 		for(elementPos in this.elements) {
-			if(callback(this.elements[elementPos]) == true) {
-				return this.elements[elementPos];
+			if(callback(this.elements[elementPos])) {
+				matches.push(this.elements[elementPos]);
 			}
 		}
 
