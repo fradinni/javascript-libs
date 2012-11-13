@@ -75,7 +75,7 @@ List.prototype = {
 	//
 	remove: function(element) {
 		var tmp = [];
-		var removed;
+		var removed = undefined;
 
 		for(pos in this.elements) {
 			if(element !== this.elements[pos]) {
@@ -320,7 +320,3 @@ List.prototype = {
 		return false;
 	}
 };
-
-
-var test = new List();
-test.add("element1");
