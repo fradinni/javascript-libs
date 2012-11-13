@@ -1,3 +1,14 @@
+//
+// List implementation inspired by Groovy.
+// 
+// Author: Nicolas FRADIN
+// Date : 2012-11-13
+//
+
+
+//
+// List constructor
+//
 var List = function() {
 	var self = this;
 
@@ -5,8 +16,12 @@ var List = function() {
 	self.size = 0;
 }
 
+
 List.prototype = {
 	
+	//
+	// Add an element to List
+	//
 	add: function(element) {
 		this.elements.push(element);
 		this._calcListSize();
@@ -14,6 +29,10 @@ List.prototype = {
 		return this;
 	},
 
+
+	//
+	// Add an element to List at specfied index
+	//
 	addAt: function(index, element) {
 		var tmp = []
 		var listPos = 0;
@@ -37,6 +56,10 @@ List.prototype = {
 		return this;
 	},
 
+
+	//
+	// Add an array of elements to list
+	//
 	addAll: function(elements) {
 		for(pos in elements) {
 			this.elements.push(elements[pos]);
@@ -46,6 +69,10 @@ List.prototype = {
 		return this;
 	},
 
+
+	//
+	// Remove specified element from List
+	//
 	remove: function(element) {
 		var tmp = [];
 		var removed;
@@ -64,6 +91,10 @@ List.prototype = {
 		return this;
 	},
 
+
+	//
+	// Remove element at specified index from List
+	//
 	removeAt: function(index) {
 		var tmp = [];
 		var removed;
@@ -81,6 +112,10 @@ List.prototype = {
 		return this;
 	},
 
+
+	//
+	// Remove specified elements from list
+	//
 	removeAll: function(elmts) {
 
 		for(elmtPos in elmts) {
@@ -93,6 +128,10 @@ List.prototype = {
 		return this;
 	},
 
+
+	//
+	// Remove all elements at specified positions from List
+	// 
 	removeAllAt: function(indexes) {
 		var tmp = [];
 		var removed = [];
@@ -109,18 +148,34 @@ List.prototype = {
 		return this;
 	},
 
+
+	//
+	// Return element at specified position
+	// 
 	get: function(index) {
 		return this.elements[index];
 	},
 
+
+	//
+	// Get the position of specified element
+	//
 	indexOf: function(element) {
 		return this.elements.indexOf(element);
 	},
 
+
+	//
+	// CHeck if List contains specified element
+	//
 	contains: function(element) {
 		return (this.elements.indexOf(element) > -1);
 	},
 
+
+	//
+	// Clear List
+	//
 	clear: function() {
 		this.elements = [];
 		this.size = 0;
@@ -128,19 +183,33 @@ List.prototype = {
 		return this;
 	},
 
+
+	// Return the number of elements in List
 	length: function() {
 		return this.size;
 	},
 
+
+	//
+	// Sorting List ASCENDING
+	//
 	sort: function(params) {
 		this.elements.sort(params);
 		return this;
 	},
 
+
+	//
+	// Return an array containing List values
+	//
 	toArray: function() {
 		return this.elements;
 	},
 
+
+	//
+	// Return a String representation of List
+	//
 	toString: function() {
 		var str = "[";
 		for(pos in this.elements) {
@@ -155,6 +224,10 @@ List.prototype = {
 		return str;
 	},
 
+
+	//
+	// Iterate on each element of List
+	//
 	each: function(callback) {
 		for(elementPos in this.elements) {
 			var ret = callback(this.elements[elementPos]);
@@ -175,15 +248,22 @@ List.prototype = {
 
 	find: function(callback) {
 		for(elementPos in this.elements) {
-			var ret = callback(this.elements[elementPos], elementPos);
-			if(ret !== undefined) {
-				this.elements[elementPos] = ret;
+			if(callback(this.elements[elementPos]) == true) {
+				return this.elements[elementPos];
 			}
 		}
+		return undefined;
 	},
 
 	findAll: function(callback) {
+		var matches = [];
+		for(elementPos in this.elements) {
+			if(callback(this.elements[elementPos]) == true) {
+				return this.elements[elementPos];
+			}
+		}
 
+		return matches;
 	},
 
 	_calcListSize: function() {
